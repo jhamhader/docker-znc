@@ -6,14 +6,16 @@ MAINTAINER Jim Myhrberg "contact@jimeh.me"
 ENV ZNC_VERSION 1.6.4
 
 RUN apt-get update \
-    && apt-get install -y sudo wget build-essential libssl-dev libperl-dev \
-               pkg-config swig3.0 libicu-dev ca-certificates \
+    && apt-get install -y software-properties-common libperl-dev \
+       python-software-properties sudo wget build-essential libssl-dev \
+       pkg-config swig3.0 libicu-dev ca-certificates \
+       python3 python3-dev python3-pip \
     && mkdir -p /src \
     && cd /src \
     && wget "http://znc.in/releases/archive/znc-${ZNC_VERSION}.tar.gz" \
     && tar -zxf "znc-${ZNC_VERSION}.tar.gz" \
     && cd "znc-${ZNC_VERSION}" \
-    && ./configure --disable-ipv6 \
+    && ./configure --disable-ipv6 --enable-python \
     && make \
     && make install \
     && apt-get remove -y wget \
